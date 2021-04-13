@@ -7,9 +7,11 @@ const insertIntoDb = require('./connect');
 const processArray = async(finalArray) => {
     for(let i=0; i<finalArray.length; i++) {
         let url = finalArray[i];
-        console.log(i,'checkedzero')
+        // console.log(i,'checkedzero')
         await getContentFromLink(url);
-        console.log(i,'checked one')
+        console.log("succesfully data inserted for link no-",i+1)
+        if(i === finalArray.length-1) console.log("All data inserted succesfully")
+        // console.log(i,'checked one')
     }
 }
 
@@ -36,9 +38,9 @@ const getContentFromLink = (link) => {
                 const image = $('._2gIK-').find('img').attr('src');
                 // console.log (image);
 
-                let myObj = {'headLine':headLine,'image': image, 'content':content}
+                let myObj = {'headLine':headLine,'image': image, 'content':content, 'link':link}
 
-                let res = await insertIntoDb("test",myObj) ;
+                let res = await insertIntoDb("business",myObj) ;
                 resolve(res)
             }else {
                 reject(error)
@@ -84,6 +86,7 @@ response,html)=>{
             }
           }
         processArray(finalArray)
+        
     }
 });
 
